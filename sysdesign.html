@@ -5,17 +5,14 @@
 </head>
 <body>
 <div>
-    <h1>Latency</h1>
+    <h1>Network Load Calculator</h1>
     <table>
         <tr>
-            <td><label for="activeUsers">Number of active users:</label></td>
-            <td><input type="number" id="activeUsers" onkeydown="toMills('activeUsers', 'activeUsersInMills')"></td>
-            <td><p id="activeUsersInMills"></p></td>
-        </tr>
-        <tr>
             <td><label for="requestsDay">Number of requests per day:</label></td>
-            <td><input type="number" id="requestsDay" onkeydown="toMills('requestsDay', 'requestsInMills')"></td>
-            <td><p id="requestsInMills"></p></td>
+            <td><input type="number" id="requestsDay"
+                       onkeyup="handleKeyUp(() => {toMills('requestsDay', 'requestsInMills')})" onkeydown="handleKeyPress()"
+            ></td>
+            <td><p id="requestsInMills">_</p></td>
         </tr>
         <tr>
             <td><label for="bitsPerRequest">Bits per request:</label></td>
@@ -28,12 +25,14 @@
     </table>
 
 
-    <h1>Data</h1>
+    <h1>Capacity Calculator</h1>
     <table>
         <tr>
             <td><label for="users">Number of users:</label></td>
-            <td><input type="number" id="users" onkeydown="toMills('users', 'usersInMills')"></td>
-            <td><p id="usersInMills"></p></td>
+            <td><input type="number" id="users"
+                       onkeyup="handleKeyUp(() => {toMills('users', 'usersInMills')})" onkeydown="handleKeyPress()"
+            ></td>
+            <td><p id="usersInMills">_</p></td>
         </tr>
         <tr>
             <td><label for="bitsPerUser">Bits per Entity:</label></td>
@@ -41,24 +40,36 @@
         </tr>
         <tr>
             <td><button onclick="usersPerYear()">Calculate users per year</button></td>
-            <td><p id="usersPerYear"></p></td>
+            <td><p id="usersPerYear">_</p></td>
+        </tr>
+        <tr><td><br/></td></tr>
+        <tr>
+            <td><label for="entitiesDay">Number of entities per day:</label></td>
+            <td><input type="number" id="entitiesDay"
+                       onkeyup="handleKeyUp(() => {toMills('entitiesDay', 'entitiesInMills')})" onkeydown="handleKeyPress()"
+            ></td>
+            <td><p id="entitiesInMills">_</p></td>
         </tr>
         <tr>
-            <td><label for="requestsDay">Number of entities per day:</label></td>
-            <td><input type="number" id="entitiesDay" onkeydown="toMills('entitiesDay', 'entitiesInMills')"></td>
-            <td><p id="entitiesInMills"></p></td>
-        </tr>
-        <tr>
-            <td><label for="bitsPerRequest">Bits per Entity:</label></td>
+            <td><label for="bitsPerEntity">Bits per Entity:</label></td>
             <td><input type="number" id="bitsPerEntity"></td>
         </tr>
         <tr>
             <td><button onclick="entitiesPerYear()">Calculate entities per year</button></td>
-            <td><p id="dataOutput"></p></td>
+            <td><p id="dataOutput">_</p></td>
         </tr>
     </table>
 </div>
 <script>
+    let timer,
+        timeoutVal = 500;
+    function handleKeyUp(callback) {
+        window.clearTimeout(timer); // prevent errant multiple timeouts from being generated
+        timer = window.setTimeout(() => {callback();}, timeoutVal);
+    }
+    function handleKeyPress() {
+        window.clearTimeout(timer);
+    }
     function toBillions(field1, field2) {
         let fieldValue = document.getElementById(field1).value;
         let fieldValueInBillions = fieldValue / 1000000000;
