@@ -30,8 +30,10 @@
         </tr>
         <tr>
             <td><button onclick="requestsPerSecond()">Calculate requests per second in mb</button></td>
-            <td>toGB((bitsToBytes(bitsPerRequest) * requestsPerDay)/86400)</td>
             <td><p id="output"></p></td>
+        </tr>
+        <tr>
+            <td><i>toGB((bitsToBytes(bitsPerRequest) * requestsPerDay)/86400)</i></td>
         </tr>
     </table>
 
@@ -67,8 +69,11 @@
         </tr>
         <tr>
             <td><button onclick="entitiesPerYear()">Calculate entities per year</button></td>
-            <td>toGB(bitsToBytes(bitsPerEntity) * entitiesPerDay * 365)</td>
             <td><p id="dataOutput">_</p></td>
+        </tr>
+        
+        <tr>
+            <td><i>toGB(bitsToBytes(bitsPerEntity) * entitiesPerDay * 365)</i></td>
         </tr>
     </table>
 </div>
